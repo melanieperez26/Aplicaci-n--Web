@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Metflis.com</title>
+</head>
+<body>
+
+    <h1>Bienvenidos a Metflis.com</h1>
+
+    <p><mark>Metflis.com</mark> es el lugar donde puedes encontrar las películas de tu preferencia totalmente gratis.</p>
+
+    <div>
+        <p>Selecciona tu película favorita del siguiente menú:</p>
+        <select>
+            <option value="pelicula1">Pelicula 1</option>
+            <option value="pelicula2">Pelicula 2</option>
+            <option value="pelicula3">Pelicula 3</option>
+        </select>
+    </div>
+
+    <p>Si tienes alguna pregunta, no dudes en contactarnos:</p>
+
+    <address>
+        Autor: Melanie Pérez<br>
+        Email: contacto@metflis.com<br>
+        
+    </address>
+
+    <hr>
+
+    <div>
+        <p>O utiliza el formulario de contacto:</p>
+        <form>
+            <label for="nombre">Nombre:</label>
+            <input type="text" id="nombre" name="nombre"><br><br>
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email"><br><br>
+            <button type="submit">Enviar</button>
+        </form>
+    </div>
+
+    <hr>
+
+    <center>
+        <p>Gracias por visitar <mark>Metflis.com</mark>!</p>
+        <img src="imagen.webp" width="350px" height="250px" alt="Logo de Metflis">
+    </center>
+
+    <pre>
+        Películas en:
+        - Acción
+        - Comedia
+        - Drama
+    </pre>
+
+    <nav>
+        <a href="#">Inicio</a> |
+        <a href="#">Películas</a> |
+        <a href="#">Contacto</a>
+    </nav>
+
+</body>
+</html>
+
+
+
+

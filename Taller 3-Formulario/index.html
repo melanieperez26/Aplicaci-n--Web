@@ -1,0 +1,70 @@
+<!DOCTYPE html> 
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formulario de Clientes</title>
+    <link rel="stylesheet" href="styles.css"> 
+</head>
+<body>
+    <div class="contenedor">
+        <div class="form_contenido">
+            <h1 id="tittle">Regístrate Ahora</h1>
+            <form id="form-validation" novalidate>
+                <div class="input-group">
+                    <div class="input-wrapper">
+                        <input type="text" placeholder="Nombres" required>
+                        <small class="error-message">Obligatorio</small>
+                    </div>
+                    <div class="input-wrapper">
+                        <input type="text" placeholder="Apellidos" required>
+                        <small class="error-message">Obligatorio</small>
+                    </div>
+                    <div class="input-wrapper">
+                        <input type="text" placeholder="Cédula" required>
+                        <small class="error-message">Obligatorio</small>
+                    </div>
+                    <div class="input-wrapper">
+                        <input type="text" placeholder="Dirección" required>
+                        <small class="error-message">Obligatorio</small>
+                    </div>
+                    <div class="input-wrapper">
+                        <input type="text" placeholder="Teléfono" required>
+                        <small class="error-message">Obligatorio</small>
+                    </div>
+                    <div class="input-wrapper">
+                        <input type="email" placeholder="E-mail" required>
+                        <small class="error-message">Obligatorio</small>
+                    </div>
+                    <div class="input-wrapper">
+                        <input type="password" placeholder="Contraseña" required>
+                        <small class="error-message">Obligatorio</small>
+                    </div>
+                    <div class="input-wrapper">
+                        <select required>
+                            <option value="" disabled selected>Ciudad</option>
+                            <option value="Manta">Manta</option>
+                            <option value="Quito">Quito</option>
+                            <option value="Guayaquil">Guayaquil</option>
+                        </select>
+                        <small class="error-message">Es necesario seleccionar una ciudad</small>
+                    </div>
+                </div>
+                <div class="boton-cuerpo">
+                    <input type="submit" value="Registrarse">
+                </div>
+            </form>
+        </div>
+    </div>
+    <script>
+        const form = document.getElementById("form-validation");
+        form.addEventListener("submit", (e) => {
+            if (form.checkValidity() === false) {
+                e.preventDefault();
+                e.stopPropagation();
+                form.classList.add('was-validated');
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Iteraciones de Operaciones</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="video-background">
+        <video autoplay muted loop id="bgVideo">
+            <source src="assets/assets.mp4" type="video/mp4">
+            <source src="assets/assets.webm" type="video/webm">
+            <source src="assets/assets.ogg" type="video/ogg">
+            Tu navegador no soporta el formato de video.
+        </video>
+    </div>
+
+    <div class="container">
+        <h1>Bucle de Operaciones</h1>
+        <label for="numero1">Primer Número:</label>
+        <input type="number" id="numero1">
+        
+        <label for="numero2">Segundo Número:</label>
+        <input type="number" id="numero2">
+        
+        <button onclick="Operaciones()">Empezar</button>
+        
+        <div id="resultados"></div>
+    </div>
+
+    <script type="text/javascript">
+        function Operaciones() {
+            var numero1 = parseFloat(document.getElementById("numero1").value);
+            var numero2 = parseFloat(document.getElementById("numero2").value);
+
+            
+            if (isNaN(numero1) || isNaN(numero2)) {
+                alert("Por favor, ingrese números válidos.");
+                return;
+            }
+
+            var resultados = "";
+            var delay = 1000;  // para retrasar el mensaje
+
+          
+            for (var i = 1; i <= 5; i++) {
+                (function(i) {
+                    setTimeout(function() {
+                        if (i === 1) {
+                            var suma = numero1 + numero2;
+                            resultados += "La primera vuelta es suma, el resultado es: " + suma + "<br>";
+                        }
+                        if (i === 2) {
+                            var resta = numero1 - numero2;
+                            resultados += "La segunda vuelta es resta, el resultado es: " + resta + "<br>";
+                        }
+                        if (i === 3) {
+                            var multiplicacion = numero1 * numero2;
+                            resultados += "La tercera vuelta es multiplicación, el resultado es: " + multiplicacion + "<br>";
+                        }
+                        if (i === 4) {
+                            if (numero2 !== 0) {
+                                var division = numero1 / numero2;
+                                resultados += "La cuarta vuelta es división, el resultado es: " + division + "<br>";
+                            } else {
+                                resultados += "La división no es posible (división entre cero)<br>";
+                            }
+                        }
+                        if (i === 5) {
+                            if (numero2 !== 0) {
+                                var mod = numero1 % numero2;
+                                resultados += "La quinta vuelta es un módulo, el resultado es: " + mod + "<br>";
+                            } else {
+                                resultados += "El módulo no es posible (división entre cero)<br>";
+                            }
+                        }
+
+                        document.getElementById("resultados").innerHTML = resultados;
+                    }, i * delay); 
+                })(i);
+            }
+        }
+    </script>
+</body>
+</html>

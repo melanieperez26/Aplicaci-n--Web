@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestión de Permisos</title>
+    <style>
+        /* Codigo Css */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f4f4f4;
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        th, td {
+            padding: 10px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        th {
+            background-color: #007bff;
+            color: white;
+        }
+        .form-container {
+            background: white;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+        }
+        .form-container label {
+            display: block;
+            margin: 10px 0 5px;
+        }
+        .form-container input, 
+        .form-container select {
+            width: calc(100% - 20px);
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        .form-container button {
+            padding: 10px 15px;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .form-container button:hover {
+            background-color: #218838;
+        }
+    </style>
+    <script>
+        /* Validaciones Javascript */
+        function validarFormulario(event) {
+            event.preventDefault(); 
+
+            const tipo = document.getElementById('tipo').value;
+            const nombre = document.getElementById('nombre').value;
+            const telefono = document.getElementById('telefono').value;
+            const placa = document.getElementById('placa').value;
+            const motivo = document.getElementById('motivo').value;
+            const fechaInicio = document.getElementById('fecha_inicio').value;
+            const fechaFin = document.getElementById('fecha_fin').value;
+
+            if (!tipo || !nombre || !telefono || !placa || !motivo || !fechaInicio || !fechaFin) {
+                alert('Por favor, completa todos los campos antes de enviar.');
+                return false;
+            }
+
+            
+            alert('Formulario enviado correctamente');
+            document.getElementById('form-permiso').submit(); 
+        }
+    </script>
+</head>
+<body>
+    <h1>Gestión de Permisos</h1>
+    
+    <div class="form-container">
+        <h2>Crear Nuevo Permiso</h2>
+        <form id="form-permiso" onsubmit="validarFormulario(event)">
+            <label for="tipo">Tipo de Permiso:</label>
+            <select id="tipo" required>
+                <option value="">Seleccione</option>
+                <option value="temporal">Temporal</option>
+                <option value="restringido">Restringido</option>
+            </select>
+            
+            <label for="nombre">Nombre completo:</label>
+            <input type="text" id="nombre" placeholder="Escribe tu nombre completo" required>
+
+            <label for="telefono">Número de teléfono:</label>
+            <input type="text" id="telefono" placeholder="0999999999" required>
+
+            <label for="placa">Número de placa:</label>
+            <input type="text" id="placa" placeholder="ABC-1234" required>
+
+            <label for="motivo">Motivo de la visita:</label>
+            <input type="text" id="motivo" placeholder="Motivo de la visita" required>
+
+            <label for="fecha_inicio">Fecha de Inicio:</label>
+            <input type="date" id="fecha_inicio" required>
+
+            <label for="fecha_fin">Fecha de Fin:</label>
+            <input type="date" id="fecha_fin" required>
+            
+            <button type="submit">Crear Permiso</button>
+        </form>
+    </div>
+
+    <div class="form-container">
+        <h2>Listado de Permisos</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Tipo de Permiso</th>
+                    <th>Nombre</th>
+                    <th>Teléfono</th>
+                    <th>Número de Placa</th>
+                    <th>Motivo de Visita</th>
+                    <th>Fecha de Inicio</th>
+                    <th>Fecha de Fin</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Temporal</td>
+                    <td>Juan Pérez</td>
+                    <td>0999999999</td>
+                    <td>ABC-1234</td>
+                    <td>Visita a la universidad</td>
+                    <td>2024-09-20</td>
+                    <td>2024-09-30</td>
+                    <td>
+                        <button>Editar</button>
+                        <button>Eliminar</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>

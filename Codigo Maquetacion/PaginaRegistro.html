@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registro</title>
+    <style>
+        /* Codigo Css */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f4f4f4;
+        }
+        form {
+            background: #fff;
+            padding: 15px; 
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+            max-width: 800px; 
+            margin: 0 auto; 
+        }
+        input {
+            display: block;
+            width: 97%;
+            padding: 8px; 
+            margin-bottom: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        button {
+            padding: 8px; 
+            border: none;
+            border-radius: 5px;
+            background-color: #5cb85c;
+            color: white;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #4cae4c;
+        }
+        .error-message {
+            color: red;
+            text-align: center;
+            margin-top: 10px;
+            font-size: 12px; 
+        }
+    </style>
+</head>
+<body>
+    <form id="registerForm">
+        <h2>Registrarse</h2>
+        <input type="text" id="registerUsername" placeholder="Usuario" required />
+        <input type="password" id="registerPassword" placeholder="Contraseña" required />
+        <button type="submit">Registrarse</button>
+        <div id="errorMessage" class="error-message" style="display: none;"></div>
+    </form>
+
+    <script>
+        /* Validaciones Javascript */
+        const handleRegister = (e) => {
+            e.preventDefault();
+            const username = document.getElementById('registerUsername').value.trim();
+            const password = document.getElementById('registerPassword').value.trim();
+            const errorMessage = document.getElementById('errorMessage');
+
+            // Validación de campos vacíos
+            if (username === '' || password === '') {
+                errorMessage.innerText = 'Por favor, completa todos los campos.';
+                errorMessage.style.display = 'block';
+                return;
+            }
+
+            // Validación de longitud mínima de la contraseña
+            if (password.length < 6) {
+                errorMessage.innerText = 'La contraseña debe tener al menos 6 caracteres.';
+                errorMessage.style.display = 'block';
+                return;
+            }
+
+            // Registro exitoso
+            alert(`Usuario ${username} registrado con éxito.`);
+        };
+
+        document.getElementById('registerForm').onsubmit = handleRegister;
+    </script>
+</body>
+</html>

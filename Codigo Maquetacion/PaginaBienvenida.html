@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bienvenida - Sistema de Control de Acceso Vehicular</title>
+    <style>
+        body {
+            /* Codigo Css */
+            font-family: Arial, sans-serif;
+            background-color: #ce0909;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .welcome-container {
+            background-color: white;
+            padding: 100px; 
+            border-radius: 10px;
+            box-shadow: 0px 0px 25px rgba(0, 0, 0, 0.2); 
+            text-align: center;
+            width: 800px; 
+        }
+        h1 {
+            color: #101010;
+            margin-bottom: 20px;
+            font-size: 28px; 
+        }
+        p {
+            margin-bottom: 30px;
+            font-size: 22px; 
+            color: #555;
+        }
+        button {
+            padding: 15px 27px; 
+            background-color: #28a745;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 25px; 
+        }
+        button:hover {
+            background-color: #218838;
+        }
+    </style>
+</head>
+<body>
+    <div class="welcome-container">
+        <h1>Bienvenido al Sistema de Control de Acceso Vehicular</h1>
+        <p>Este sistema te permite gestionar el acceso de vehículos a las instalaciones de manera eficiente y segura.</p>
+        <button onclick="window.location.href='#loginPage'">Iniciar Sesión</button>
+        <button onclick="window.location.href='#RegistrarPage'">Registrar</button>
+    </div>
+</body>
+</html>

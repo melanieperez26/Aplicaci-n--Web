@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Página de Informes y Estadísticas</title>
+    <style>
+        /* Codigo Css */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f4f4f4;
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .filter-section {
+            margin-bottom: 20px;
+        }
+        label {
+            margin-right: 10px;
+        }
+        .button {
+            padding: 10px 15px;
+            margin: 10px 0;
+            background-color: #08ba38;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .button:hover {
+            background-color: #0056b3;
+        }
+        .chart {
+            margin-top: 20px;
+            height: 400px;
+            background-color: #eaeaea;
+            border-radius: 5px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 20px;
+            color: #666;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>Informes y Estadísticas</h1>
+        <div class="filter-section">
+            <label for="start-date">Fecha de Inicio:</label>
+            <input type="date" id="start-date" name="start-date">
+            <label for="end-date">Fecha de Fin:</label>
+            <input type="date" id="end-date" name="end-date">
+            <button class="button" onclick="generateReport()">Generar Informe</button>
+        </div>
+
+        <div class="chart" id="chart">
+            Gráfico de Accesos (por implementar)
+        </div>
+
+        <div>
+            <button class="button" onclick="exportReport('pdf')">Exportar a PDF</button>
+            <button class="button" onclick="exportReport('excel')">Exportar a Excel</button>
+        </div>
+    </div>
+
+    <script>
+        /* Validaciones Javascript */
+        function generateReport() {
+            // Lógica para generar el informe y mostrar gráficos(falta implementar)
+            document.getElementById('chart').innerText = 'Gráfico generado con datos del informe';
+        }
+
+        function exportReport(format) {
+            // Lógica para exportar el informe en el formato seleccionado(falta implementar)
+            alert('Informe exportado a formato: ' + format);
+        }
+    </script>
+
+</body>
+</html>

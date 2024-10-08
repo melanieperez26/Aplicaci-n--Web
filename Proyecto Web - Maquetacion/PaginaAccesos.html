@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registro de Accesos - Control de Acceso Vehicular</title>
+    <style>
+        /* Código CSS */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 20px;
+        }
+        header {
+            background: #c60c0c;
+            color: #fff;
+            padding: 15px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        header .logo img {
+            height: 50px;
+        }
+        nav {
+            background: #333;
+        }
+        nav ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+        }
+        nav ul li {
+            flex: 1;
+        }
+        nav ul li a {
+            display: block;
+            padding: 15px;
+            color: white;
+            text-align: center;
+            text-decoration: none;
+        }
+        nav ul li a:hover {
+            background: #444;
+        }
+        
+
+        .container {
+            background: white;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h2 {
+            text-align: center;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        th, td {
+            padding: 10px;
+            border: 1px solid #ddd;
+            text-align: center;
+        }
+
+        th {
+            background-color: #0056b3;
+            color: white;
+        }
+
+        input[type="date"],
+        input[type="time"],
+        input[type="text"],
+        select {
+            padding: 10px;
+            margin: 10px 0;
+            width: calc(100% - 22px);
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+
+        button {
+            padding: 10px;
+            background: #28a745;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #218838;
+        }
+
+        .form-container {
+            margin-top: 20px;
+            border-top: 1px solid #ddd;
+            padding-top: 20px;
+        }
+
+        #accesoregistro {
+            margin-top: 10px;
+            color: green;
+            display: none;
+        }
+    </style>
+    <script>
+        
+        /* Validaciones Javascript */
+        //validacion para matriculas 
+        function validarmatricula(licensePlate) {
+            const licensePlatePattern = /^[A-Z]{3}[0-9]{4}$/;
+            return licensePlatePattern.test(licensePlate);
+        }
+        function validateForm(event) {
+            event.preventDefault(); // Evita el envío del formulario
+            const date = document.querySelector('input[name="date"]').value;
+            const time = document.querySelector('input[name="time"]').value;
+            const vehicle = document.querySelector('input[name="vehicle"]').value;
+            const name = document.querySelector('input[name="name"]').value;
+            const accessType = document.querySelector('select[name="accessType"]').value;
+            const tipo = document.querySelector('input[name="tipo"]').value; 
+
+            //validar nombre
+            const nombreValido = /^[A-Za-zÁÉÍÓÚáéíóúñÑ\s]+$/.test(name);
+            if (!nombreValido) {
+                alert('Por favor, ingresa un nombre válido.');
+                return false;
+            }
+            
+            //valida el ingreso de matriculas 
+            if (!validarmatricula(vehicle)) {
+                alert('La matrícula del vehículo no es válida.Ingrese el formato de 3 letras mayusculas y 4 numeros');
+                return;
+            }
+
+            //Valida el formulario de registro
+            if (!date || !time || !vehicle || !name || !accessType  || !tipo) {
+                alert('Por favor, completa todos los campos del registro.');
+            } else {
+                addRowToTable(date, time, vehicle, name, accessType, tipo);
+                document.getElementById('accesoregistro').style.display = 'block';
+            }
+            // Restablecer el formulario
+            document.getElementById('accesosform').reset();
+
+            //Tiempo del mensaje
+            setTimeout(() => {
+                document.getElementById('accesoregistro').style.display = 'none';
+            }, 3000);
+        }
+        
+        //agrega una nueva fila en la tabla
+        function addRowToTable(date, time, vehicle, name, accessType, tipo) {
+            const tableBody = document.querySelector('table tbody');
+            const newRow = document.createElement('tr');
+
+            newRow.innerHTML = `
+                <td>${date}</td>
+                <td>${time}</td>
+                <td>${tipo}</td>
+                <td>${vehicle}</td>
+                <td>${name}</td>
+                <td>${accessType}</td>
+            `;
+
+            tableBody.appendChild(newRow);
+            
+        }
+
+        function validateFilterForm(event) {
+            event.preventDefault(); // Evita el envío del formulario
+
+            const filterDate = document.querySelector('input[placeholder="Filtrar por Fecha"]').value;
+            const filterTime = document.querySelector('input[placeholder="Filtrar por Hora"]').value;
+            const filterAccessType = document.querySelector('select[placeholder="Filtrar por Tipo de Acceso"]').value;
+
+            const rows = document.querySelectorAll('table tbody tr');
+
+            // Solo valida el formulario de filtrado
+            if (!filterDate && !filterTime && !filterAccessType) {
+                event.preventDefault(); // Evita el envío del formulario
+                alert('Por favor, completa al menos un campo de filtrado.');
+            }
+
+            rows.forEach(row => {
+                const [dateCell, timeCell, tipoCell, , accessTypeCell] = row.cells;
+                const matchDate = !filterDate || dateCell.textContent === filterDate;
+                const matchTime = !filterTime || timeCell.textContent === filterTime;
+                const matchAccessType = !filterAccessType || accessTypeCell.textContent === filterAccessType;
+
+                if (matchDate && matchTime && matchAccessType) {
+                    row.style.display = ''; // Mostrar fila
+                } else {
+                    row.style.display = 'none'; // Ocultar fila
+                }
+            });
+
+            if (!filterDate && !filterTime && !filterAccessType) {
+                rows.forEach(row => row.style.display = '');
+            }
+        }
+    </script>
+    
+</head>
+<body>
+    <header>
+        <div class="logo">
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTGSLhZcVGoApXnXyK6C8Y5ZaUQbYRK6hV0zw&s" alt="Logo de la Universidad">
+        </div>
+    <nav>
+        <ul>
+            <li><a href="PaginaDesboard.html">Volver al Dashboard</a></li>
+            <li><a href="PaginaGestionVehiculos.html">Ir a Pagina Gestión de Vehículos</a></li>
+            <li><a href="PaginaAccesos.html">Ir a Pagina de Accesos</a></li>
+            <li><a href="PaginaGestionPermisos.html">Ir a Pagina Gestión de Permisos</a></li>
+            <li><a href="PaginaInformes.html">Ir a Pagina de Informes</a></li>
+        </ul>
+    </nav>
+    </header>
+
+    <div class="container">
+        <h2>Registro de Accesos</h2>
+
+        <div class="filter-container">
+            <form onsubmit="validateFilterForm(event)">
+                <input type="date" placeholder="Filtrar por Fecha">
+                <input type="time" placeholder="Filtrar por Hora">
+                <select placeholder="Filtrar por Tipo de Acceso">
+                    <option value="">Seleccionar Tipo de Acceso</option>
+                    <option value="ingreso">Ingreso</option>
+                    <option value="salida">Salida</option>
+                </select>
+                <button type="submit">Filtrar</button>
+            </form>
+        </div>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Fecha</th>
+                    <th>Hora</th>
+                    <th>Tipo</th>
+                    <th>Vehículo</th>
+                    <th>Nombre</th>
+                    <th>Tipo de Acceso</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>2024-09-24</td>
+                    <td>08:00</td>
+                    <td>Estudiante</td>
+                    <td>ABC-123</td>
+                    <td>Juan Pérez</td>
+                    <td>ingreso</td>
+                </tr>
+                <tr>
+                    <td>2024-09-24</td>
+                    <td>09:30</td>
+                    <td>Profesor</td>
+                    <td>XYZ-456</td>
+                    <td>Ana García</td>
+                    <td>salida</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="form-container">
+            <h3>Registrar Acceso</h3>
+            <form id='accesosform'onsubmit="validateForm(event)">
+                <input type="date" name="date" placeholder="Fecha" required>
+                <input type="time" name="time" placeholder="Hora" required>
+                <input type="text" name="tipo" placeholder="Tipo" required>
+                <input type="text" name="vehicle" placeholder="Vehículo" required>
+                <input type="text" name="name" placeholder="Nombre" required>
+                <select name="accessType" required>
+                    <option value="">Seleccionar Tipo de Acceso</option>
+                    <option value="ingreso">Ingreso</option>
+                    <option value="salida">Salida</option>
+                </select>
+                <button type="submit">Registrar</button>
+                <div id="accesoregistro">
+                    <h3>Acceso Registrado</h3>
+                </div>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - Control de Acceso Vehicular</title>
+    <style>
+        /* Código CSS */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f4f4f4;
+        }
+        header {
+            background: #c60c0c;
+            color: #fff;
+            padding: 15px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        header .logo img {
+            height: 50px;
+        }
+        nav {
+            background: #333;
+        }
+        nav ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+        }
+        nav ul li {
+            flex: 1;
+        }
+        nav ul li a {
+            display: block;
+            padding: 15px;
+            color: white;
+            text-align: center;
+            text-decoration: none;
+        }
+        nav ul li a:hover {
+            background: #444;
+        }
+        main {
+            padding: 20px;
+        }
+        .dashboard, .form-container, .container {
+            background: white;
+            border-radius: 5px;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(237, 98, 98, 0.1);
+            margin-bottom: 20px;
+        }
+        h1, h2 {
+            text-align: center;
+            color: #333;
+        }
+        .statistics {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+        .stat {
+            background: #e9ecef;
+            border-radius: 5px;
+            padding: 10px;
+            text-align: center;
+            flex: 1;
+            margin-right: 10px;
+        }
+        .stat:last-child {
+            margin-right: 0;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        th, td {
+            padding: 10px;
+            border: 1px solid #ddd;
+            text-align: center;
+        }
+        th {
+            background-color: #007bff;
+            color: white;
+        }
+        input[type="text"], input[type="date"], input[type="time"], select {
+            padding: 10px;
+            margin: 10px 0;
+            width: calc(100% - 22px);
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        button {
+            padding: 10px 15px;
+            background: #28a745;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background: #218838;
+        }
+        .chart {
+            margin-top: 20px;
+            height: 400px;
+            background-color: #eaeaea;
+            border-radius: 5px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 20px;
+            color: #666;
+        }
+
+        .notifications {
+            margin-top: 20px;
+        }
+
+        .notifications ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .quick-actions {
+            margin-top: 20px;
+        }
+
+        .quick-actions button {
+            padding: 10px 15px;
+            margin-right: 10px;
+            background: #0056b3;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .quick-actions button:hover {
+            background: #004494;
+        }
+
+        footer {
+            text-align: center;
+            padding: 10px;
+            background: #333;
+            color: white;
+            position: relative;
+            bottom: 0;
+            width: 100%;
+        }
+
+        .login-form {
+            background: #fff;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            margin: 20px auto;
+            max-width: 400px;
+        }
+
+        .login-form input {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+
+        .error {
+            color: red;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo">
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTGSLhZcVGoApXnXyK6C8Y5ZaUQbYRK6hV0zw&s" alt="Logo de la Universidad">
+        </div>
+        <div class="user-info">
+            <span id="welcomeMessage" style="display: none;">Bienvenido, Administrador</span>
+            <button id="logoutButton" style="display: none;">Salir</button>
+        </div>
+    </header>
+    
+    <nav>
+        <ul>
+            <li><a href="PaginaDesboard.html">Volver al Dashboard</a></li>
+            <li><a href="PaginaGestionVehiculos.html">Ir a Pagina Gestión de Vehículos</a></li>
+            <li><a href="PaginaAccesos.html">Ir a Pagina de Accesos</a></li>
+            <li><a href="PaginaGestionPermisos.html">Ir a Pagina Gestión de Permisos</a></li>
+            <li><a href="PaginaInformes.html">Ir a Pagina de Informes</a></li>
+        </ul>
+    </nav>
+
+    <main>
+        <section class="dashboard">
+            <h1>Dashboard</h1>
+    
+            <div class="statistics">
+                <div class="stat">
+                    <h2>Total de Vehículos Autorizados</h2>
+                    <p>150</p>
+                </div>
+                <div class="stat">
+                    <h2>Accesos Recientes</h2>
+                    <p>25</p>
+                </div>
+                <div class="stat">
+                    <h2>Alertas de Seguridad</h2>
+                    <p>3</p>
+                </div>
+            </div>
+    
+    
+            <div class="recent-accesses">
+                <h2>Accesos Recientes</h2>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Hora</th>
+                            <th>Matrícula</th>
+                            <th>Nombre</th>
+                            <th>Estado</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>10:15 AM</td>
+                            <td>ABC123</td>
+                            <td>Jose Avila</td>
+                            <td>Autorizado</td>
+                        </tr>
+                        <tr>
+                            <td>10:30 AM</td>
+                            <td>XYZ456</td>
+                            <td>Katty Posligua</td>
+                            <td>No Autorizado</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+    
+            <div class="notifications">
+                <h2>Notificaciones</h2>
+                <ul>
+                    <li>Acceso no autorizado detectado a las 10:30 AM.</li>
+                    <li>Recuerda revisar los permisos que expiran esta semana.</li>
+                </ul>
+            </div>
+    
+            <div class="quick-actions">
+                <h2>Acciones Rápidas</h2>
+                <button onclick="location.href='PaginaGestionVehiculos.html'">Registrar Nuevo Vehículo</button>
+                <button onclick="location.href='PaginaAccesos.html'">Agregar Usuario</button>
+                <button onclick="location.href='PaginaInformes.html'">Generar Informe</button>
+
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>Contacto: soporte@uleam.edu.ec</p>
+        <p>&copy; 2024 Uleam</p>
+    </footer>
+
+    <script>
+        // Manejar el cierre de sesión
+        document.getElementById('logoutButton').onclick = function() {
+
+            // Redirigir al usuario a la página de inicio de sesión
+            window.location.href = 'PaginaBienvenida.html'; 
+        };
+
+        // Simular el inicio de sesión
+        document.addEventListener('DOMContentLoaded', function() {
+            // Simulación de que el usuario ha iniciado sesión
+            const isLoggedIn = true; // Cambiar a false si no se está autenticado
+
+            if (isLoggedIn) {
+                document.getElementById('welcomeMessage').style.display = 'inline';
+                document.getElementById('logoutButton').style.display = 'inline';
+            }
+        });
+        
+    </script>
+</body>
+</html>

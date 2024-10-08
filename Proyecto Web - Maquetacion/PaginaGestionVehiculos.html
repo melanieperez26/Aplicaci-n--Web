@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestión de Vehículos - Control de Acceso Vehicular</title>
+    <style>
+        /* Código CSS */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 20px;
+        }
+        
+        header {
+            background: #c60c0c;
+            color: #fff;
+            padding: 15px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        header .logo img {
+            height: 50px;
+        }
+        nav {
+            background: #333;
+        }
+        nav ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+        }
+        nav ul li {
+            flex: 1;
+        }
+        nav ul li a {
+            display: block;
+            padding: 15px;
+            color: white;
+            text-align: center;
+            text-decoration: none;
+        }
+        nav ul li a:hover {
+            background: #444;
+        }
+
+        .container {
+            background: white;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h2 {
+            text-align: center;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        th, td {
+            padding: 10px;
+            border: 1px solid #ddd;
+            text-align: center;
+        }
+
+        th {
+            background-color: #0056b3;
+            color: white;
+        }
+
+        input[type="text"],
+        input[type="number"] {
+            padding: 10px;
+            margin: 10px 0;
+            width: calc(100% - 22px);
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+
+        button {
+            padding: 10px;
+            background: #28a745;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #218838;
+        }
+
+        .form-container {
+            margin-top: 20px;
+            border-top: 1px solid #ddd;
+            padding-top: 20px;
+        }
+        form div {
+            margin-bottom: 10px; /* Espacio entre cada campo */
+        }
+
+        #vehiculoregistrado {
+            display: none;
+            margin-top: 10px;
+            color: green;
+        }
+    </style>
+    
+</head>
+<body>
+    <header>
+    <div class="logo">
+        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTGSLhZcVGoApXnXyK6C8Y5ZaUQbYRK6hV0zw&s" alt="Logo de la Universidad">
+    </div>
+    <nav>
+        <ul>
+            <li><a href="PaginaDesboard.html">Volver al Dashboard</a></li>
+            <li><a href="PaginaGestionVehiculos.html">Ir a Pagina Gestión de Vehículos</a></li>
+            <li><a href="PaginaAccesos.html">Ir a Pagina de Accesos</a></li>
+            <li><a href="PaginaGestionPermisos.html">Ir a Pagina Gestión de Permisos</a></li>
+            <li><a href="PaginaInformes.html">Ir a Pagina de Informes</a></li>
+        </ul>
+    </nav>
+    </header>
+
+    <div class="container">
+        <h2>Gestión de Vehículos</h2>
+
+        <div class="form-container">
+            <h3>Añadir Nuevo Vehículo</h3>
+            <form id="vehiculoForm" onsubmit="return registrarVehiculo(event);">
+                <div>
+                    <label for="matricula">Matrícula:</label>
+                    <input type="text" id="matricula" placeholder="Matrícula" required>
+                </div>
+                <div>
+                    <label for="propietario">Propietario:</label>
+                    <input type="text" id="propietario" placeholder="Propietario" required>
+                </div>
+                <div>
+                    <label for="modelo">Modelo:</label>
+                    <input type="text" id="modelo" placeholder="Modelo" required>
+                </div>
+                <div>
+                    <label for="color">Color:</label>
+                    <input type="text" id="color" placeholder="Color" required>
+                </div>
+                <button type="submit">Registrar Vehículo</button>
+            </form>
+            
+            <div id="vehiculoregistrado" style="display: none;">
+                <h3>Vehículo Registrado</h3>
+            </div>
+        </div>
+
+        <h3>Listado de Vehículos Registrados</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>Matrícula</th>
+                    <th>Propietario</th>
+                    <th>Modelo</th>
+                    <th>Color</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody id="vehiculosTableBody">
+                <!-- Las nuevas filas se agregarán aquí -->
+                <tr>
+                    <td>ABC-123</td>
+                    <td>Juan Pérez</td>
+                    <td>Toyota Corolla</td>
+                    <td>Rojo</td>
+                    <td>
+                        <button onclick="editarVehiculo('ABC-123')">Editar</button>
+                        <button onclick="eliminarVehiculo('ABC-123')">Eliminar</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <script>
+        
+        /* Validaciones Javascript */
+        //Validar Registro
+        function validarmatricula(licensePlate) {
+            const licensePlatePattern = /^[A-Z]{3}[0-9]{4}$/;
+            return licensePlatePattern.test(licensePlate);
+        }
+        //validar color(lista de colores)
+        function validarColor(color) {
+            const validColors = [
+                "Rojo", "Verde", "Azul", "Amarillo", "Naranja", "Negro", "Blanco", "Gris", "Marrón", "Violetas", "Cyan", "Magenta"
+            ];
+            return validColors.includes(color.charAt(0).toUpperCase() + color.slice(1).toLowerCase());
+        }
+        function registrarVehiculo(event) {
+        event.preventDefault(); // Evita el envío del formulario
+
+        const matricula = document.getElementById('matricula').value.trim();
+        const propietario = document.getElementById('propietario').value.trim();
+        const modelo = document.getElementById('modelo').value.trim();
+        const color = document.getElementById('color').value.trim();
+
+        // Validar propietario (nombre)
+        const propietarioValido = /^[A-Za-z\s]+$/.test(propietario);
+        if (!propietarioValido) {
+            alert('Por favor, ingresa un nombre válido.');
+            return false;
+        }
+        //valida el color
+        if (!validarColor(color)) {
+                alert('Por favor, ingresa un nombre de color válido. Ejemplo: Rojo, Verde, Azul, etc.');
+                return;
+        }
+        
+
+        //valida el ingreso de matriculas 
+        if (!validarmatricula(matricula)) {
+                alert('La matrícula del vehículo no es válida.Ingrese el formato de 3 letras mayusculas y 4 numeros');
+                return;
+        }
+
+        // Mostrar mensaje de vehículo registrado
+        document.getElementById('vehiculoregistrado').style.display = 'block';
+        document.getElementById('vehiculoregistrado').innerHTML = `<h3>Vehículo Registrado: ${matricula}, Propietario: ${propietario}, Modelo: ${modelo}, Color: ${color}</h3>`;
+
+        setTimeout(() => {
+                document.getElementById('vehiculoregistrado').style.display = 'none';
+        }, 3000);
+
+        // Agregar el nuevo vehículo a la tabla
+        const tableBody = document.getElementById('vehiculosTableBody');
+        const newRow = document.createElement('tr');
+        newRow.innerHTML = `
+            <td>${matricula}</td>
+            <td>${propietario}</td>
+            <td>${modelo}</td>
+            <td>${color}</td>
+            <td>
+                <button onclick="editarVehiculo('${matricula}')">Editar</button>
+                <button onclick="eliminarVehiculo('${matricula}', this)">Eliminar</button>
+            </td>
+        `;
+        tableBody.appendChild(newRow);
+
+        // Restablecer el formulario
+        document.getElementById('vehiculoForm').reset();
+
+        return false; // Evitar el envío del formulario
+        }
+
+        function editarVehiculo(matricula) {
+            alert("Función de editar vehículo: " + matricula);
+            // Aquí iría la lógica para editar el vehículo (por implementar)
+        }
+
+        function eliminarVehiculo(matricula, button) {
+            if (confirm("¿Está seguro que desea eliminar el vehículo con matrícula " + matricula + "?")) {
+                // Eliminar la fila correspondiente
+                const row = button.parentNode.parentNode;
+                row.parentNode.removeChild(row);
+                alert("Vehículo con matrícula " + matricula + " eliminado.");
+            }
+        }
+    </script>
+</body>
+
+</html>

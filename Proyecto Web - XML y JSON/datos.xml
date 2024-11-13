@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<vehiculos>
+    <vehiculo>
+        <placa>ABC-123</placa>
+        <tipo>Auto</tipo>
+        <propietario>Carlos Sanchez</propietario>
+    </vehiculo>
+    <vehiculo>
+        <placa>XYZ-789</placa>
+        <tipo>Moto</tipo>
+        <propietario>Katty Posligua</propietario>
+    </vehiculo>
+</vehiculos>
+

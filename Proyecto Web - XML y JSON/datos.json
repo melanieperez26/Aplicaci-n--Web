@@ -1,0 +1,14 @@
+{
+    "vehiculos":[
+        {
+            "placa":"ABC-123",
+            "tipo": "Auto",
+            "propietario":"Carlos Sanchez"
+        },
+        {
+            "placa":"XYZ-789",
+            "tipo": "Moto",
+            "propietario":"Katty Posligua"
+        }
+    ]
+}

@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestión de Permisos</title>
+    <style>
+        /* Código CSS */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f4f4f4;
+        }
+        header {
+            background: #c60c0c;
+            color: #fff;
+            padding: 15px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        header .logo img {
+            height: 50px;
+        }
+        nav {
+            background: #333;
+        }
+        nav ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+        }
+        nav ul li {
+            flex: 1;
+        }
+        nav ul li a {
+            display: block;
+            padding: 15px;
+            color: white;
+            text-align: center;
+            text-decoration: none;
+        }
+        nav ul li a:hover {
+            background: #444;
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        th, td {
+            padding: 10px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        th {
+            background-color: #007bff;
+            color: white;
+        }
+        .form-container {
+            background: white;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+        }
+        .form-container label {
+            display: block;
+            margin: 10px 0 5px;
+        }
+        .form-container input, 
+        .form-container select {
+            width: calc(100% - 20px);
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        .form-container button {
+            padding: 10px 15px;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .form-container button:hover {
+            background-color: #218838;
+        }
+        #permisocreado {
+            display: none; /* Oculta el mensaje inicialmente */
+        }
+    </style>
+    <script>
+        
+        const permisos = []; // Array para almacenar los permisos
+
+        //Validar matricula
+        function validarmatricula(licensePlate) {
+            const licensePlatePattern = /^[A-Z]{3}[0-9]{4}$/;
+            return licensePlatePattern.test(licensePlate);
+        }
+
+        function validarFormulario(event) {
+            event.preventDefault(); 
+
+            const tipo = document.getElementById('tipo').value;
+            const nombre = document.getElementById('nombre').value;
+            const telefono = document.getElementById('telefono').value;
+            const placa = document.getElementById('placa').value;
+            const motivo = document.getElementById('motivo').value;
+            const fechaInicio = document.getElementById('fecha_inicio').value;
+            const fechaFin = document.getElementById('fecha_fin').value;
+
+            // Validar que todos los campos estén completos
+            if (!tipo || !nombre || !telefono || !placa || !motivo || !fechaInicio || !fechaFin) {
+                alert('Por favor, completa todos los campos antes de enviar.');
+                return false;
+            }
+
+            // Validar nombre
+            const nombreValido = /^[A-Za-z\s]+$/.test(nombre);
+            if (!nombreValido) {
+                alert('Por favor, ingresa un nombre válido.');
+                return false;
+            }
+
+            // Validar teléfono
+            const telefonoValido = /^\d{10}$/.test(telefono);
+            if (!telefonoValido) {
+                alert('Por favor, ingresa un número de teléfono válido (10 dígitos).');
+                return false;
+            }
+            //valida el ingreso de matriculas 
+            if (!validarmatricula(placa)) {
+                alert('La matrícula del vehículo no es válida.Ingrese el formato de 3 letras mayusculas y 4 numeros');
+                return;
+            }
+            
+            if (fechaFin < fechaInicio) {
+                alert('La fecha de fin no puede ser anterior a la fecha de inicio.');
+                return false;
+            }
+
+            // Crear un nuevo permiso
+            const nuevoPermiso = {
+                tipo,
+                nombre,
+                telefono,
+                placa,
+                motivo,
+                fechaInicio,
+                fechaFin,
+            };
+
+            // Agregar el nuevo permiso al array
+            permisos.push(nuevoPermiso);
+
+            // Mostrar mensaje de "Permiso Creado"
+            document.getElementById('permisocreado').style.display = 'block';
+
+            // Limpiar el formulario
+            document.getElementById('form-permiso').reset();
+
+            // Actualizar la tabla
+            actualizarTabla();
+        }
+
+        function actualizarTabla() {
+            const tablaBody = document.querySelector('tbody');
+            tablaBody.innerHTML = ''; // Limpiar la tabla
+
+            // Agregar cada permiso a la tabla
+            permisos.forEach((permiso, index) => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${permiso.tipo}</td>
+                    <td>${permiso.nombre}</td>
+                    <td>${permiso.telefono}</td>
+                    <td>${permiso.placa}</td>
+                    <td>${permiso.motivo}</td>
+                    <td>${permiso.fechaInicio}</td>
+                    <td>${permiso.fechaFin}</td>
+                    <td>
+                        <button onclick="editarPermiso(${index})">Editar</button>
+                        <button onclick="eliminarPermiso(${index})">Eliminar</button>
+                    </td>
+                `;
+                tablaBody.appendChild(row);
+            });
+        }
+
+        function editarPermiso(index) {
+            // funcion para editar(por implemnetar)
+            alert('Función de editar no implementada.');
+        }
+
+        function eliminarPermiso(index) {
+            permisos.splice(index, 1); // Eliminar el permiso del array
+            actualizarTabla(); // Actualizar la tabla después de eliminar
+        }
+    </script>
+    
+</head>
+<body>
+    <header>
+        <div class="logo">
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTGSLhZcVGoApXnXyK6C8Y5ZaUQbYRK6hV0zw&s" alt="Logo de la Universidad">
+        </div>
+    <nav>
+        <ul>
+            <li><a href="PaginaDesboard.html">Volver al Dashboard</a></li>
+            <li><a href="PaginaGestionVehiculos.html">Ir a Pagina Gestión de Vehículos</a></li>
+            <li><a href="PaginaAccesos.html">Ir a Pagina de Accesos</a></li>
+            <li><a href="PaginaGestionPermisos.html">Ir a Pagina Gestión de Permisos</a></li>
+            <li><a href="PaginaInformes.html">Ir a Pagina de Informes</a></li>
+        </ul>
+    </nav>
+    </header>
+
+    <h1>Gestión de Permisos</h1>
+    
+    <div class="form-container">
+        <h2>Crear Nuevo Permiso</h2>
+        <form id="form-permiso" onsubmit="validarFormulario(event)">
+            <label for="tipo">Tipo de Permiso:</label>
+            <select id="tipo" required>
+                <option value="">Seleccione</option>
+                <option value="temporal">Temporal</option>
+                <option value="restringido">Restringido</option>
+            </select>
+            
+            <label for="nombre">Nombre completo:</label>
+            <input type="text" id="nombre" placeholder="Escribe tu nombre completo" required>
+
+            <label for="telefono">Número de teléfono:</label>
+            <input type="text" id="telefono" placeholder="0999999999" required>
+
+            <label for="placa">Número de placa:</label>
+            <input type="text" id="placa" placeholder="ABC1234" required>
+
+            <label for="motivo">Motivo de la visita:</label>
+            <input type="text" id="motivo" placeholder="Motivo de la visita" required>
+
+            <label for="fecha_inicio">Fecha de Inicio:</label>
+            <input type="date" id="fecha_inicio" required>
+
+            <label for="fecha_fin">Fecha de Fin:</label>
+            <input type="date" id="fecha_fin" required>
+            
+            <button type="submit">Crear Permiso</button>
+        </form>
+        <div id="permisocreado">
+            <h3>Permiso Creado</h3>
+        </div>
+    </div>
+
+    <div class="form-container">
+        <h2>Listado de Permisos</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Tipo de Permiso</th>
+                    <th>Nombre</th>
+                    <th>Teléfono</th>
+                    <th>Número de Placa</th>
+                    <th>Motivo de Visita</th>
+                    <th>Fecha de Inicio</th>
+                    <th>Fecha de Fin</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Aquí se llenarán los permisos -->
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>
